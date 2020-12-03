@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Switch from 'react-switch';
 import hookIcon from '../static/images/fish-hook.svg';
+import ThemeContext from '../context/ThemeContext';
 
 export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
+  const color = useContext(ThemeContext);
 
   const handleClick = () => {
     setDarkMode(!darkMode);
@@ -13,7 +15,11 @@ export default function Header() {
   return (
     <nav class='navbar navbar-expand-lg navbar-light bg-light py-3'>
       <div className='container'>
-        <a class='navbar-brand' href='#' style={{marginRight: 8}}>
+        <a
+          class='navbar-brand font-weight-bold'
+          href='#'
+          style={{marginRight: 8, color}}
+        >
           React Hooks
         </a>
         <img
