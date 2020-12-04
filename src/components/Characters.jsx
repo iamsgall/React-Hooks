@@ -1,15 +1,8 @@
-import React, {
-  useEffect,
-  useReducer,
-  useState,
-  useMemo,
-  useRef,
-  useCallback,
-} from 'react';
-import API from '../utils/API';
+import React, {useReducer, useState, useMemo, useRef, useCallback} from 'react';
 import star_empty from '../static/images/estrella.svg';
 import star from '../static/images/estrella (2).svg';
 import Search from './Search';
+import useCharacters from '../hooks/useCharacters';
 
 const initialState = {
   favorites: [],
@@ -28,7 +21,7 @@ const favoriteReducer = (state, action) => {
 };
 
 export default function Characters() {
-  const [characters, setCharacters] = useState([]);
+  const characters = useCharacters('character');
 
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
 
@@ -69,18 +62,6 @@ export default function Characters() {
     dispatch({type: 'ADD_TO_FAVORITE', payload: favorite});
     document.getElementById(`${favorite.id}`).setAttribute('src', star);
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await API.get('character');
-        return setCharacters(res.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
 
   return (
     <div className='characters'>
